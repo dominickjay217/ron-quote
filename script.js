@@ -1,12 +1,18 @@
 new Vue({
 	el: '#app',
-	data: {
-		results: []
+	data() {
+		return {
+			info: null
+		}
 	},
 	mounted() {
-
-		axios.get("https://api.tvmaze.com/schedule?country=GB").then(response => {
-			this.results = response.data
-		})
+		axios
+			.get(`https://ron-swanson-quotes.herokuapp.com/v2/quotes/1`)
+			.then(response => (this.info = response.data[0]))
+			.catch(error => {
+				console.log(error)
+				this.error = true
+			})
+			.finally(() => this.loading = false)
 	}
 })
